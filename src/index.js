@@ -3,6 +3,7 @@ import { PORT } from "./config/config.js";
 import ProductRoutes from "./routes/productos.routes.js";
 import morgan from "morgan";
 import cors from "cors";
+import "./db/db_connection.js"
 
 const app = express(); // Creamos una aplicacion de Express por la cual va a pasar todo el funcionamiento de nuestra app
 

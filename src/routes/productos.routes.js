@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllProducts, getProductById, getProductsByCategory, sortProductsBryPrice } from "../controllers/productos.controllers.js";
+import { getAllProducts, getProductById, getProductsByCategory, sortProductsBryPrice, createProduct } from "../controllers/productos.controllers.js";
 
 const router = Router();
 
@@ -9,5 +9,7 @@ router.get("/producto/:id", getProductById); // Declaramos que se va a recibir u
 
 router.get("/productos/:category", getProductsByCategory); // ¿? Preguntar 'por qué no funciona con "/producto", y en dicho caso se ejecuta el endpoint de arriba.
 router.get("/productos/sort/:sort", sortProductsBryPrice);
+
+router.post("/product", createProduct);
 
 export default router;
