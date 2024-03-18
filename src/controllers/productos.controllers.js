@@ -34,7 +34,7 @@ export const getProductsByCategory = async (req, res) => {
   const { category } = req.params;
   console.log(category, "<-- categoria");
 
-  if (productos.length === 0)
+  /*if (productos.length === 0) TAREA VIEJA
     return res.status(204).send("No existen productos para ordenar");
 
   const productsByCategory = productos.filter(
@@ -46,7 +46,17 @@ export const getProductsByCategory = async (req, res) => {
     ? res.status(200).json(productsByCategory)
     : res
         .status(404)
-        .json({ message: "No hemos podido encontrar la cotegoria solicitada" });
+        .json({ message: "No hemos podido encontrar la cotegoria solicitada" });*/
+  
+  try {
+    const productsByCategory = await Product.find( { categoria: category} );
+    console.log(productsByCategory,"<-- PBCat");
+    res.status(200).json(productsByCategory);
+  } catch (error) {
+    return res.status(500).json( {message: error} );
+  }
+
+
 };
 
 // •	Crear el endpoint sortProductByPrice que debe recibir un parámetro que puede adoptar los valores “asc” o “desc” y debe devolver los productos ordenados por precio.
