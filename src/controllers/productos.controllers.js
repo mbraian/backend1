@@ -34,10 +34,9 @@ export const getProductsByCategory = async (req, res) => {
   const { category } = req.params;
   console.log(category, "<-- categoria");
 
-  /*if (productos.length === 0) TAREA VIEJA
-    return res.status(204).send("No existen productos para ordenar");
+    /*if (productos.length === 0) return res.status(204).send("No existen productos para ordenar");
 
-  const productsByCategory = productos.filter(
+  const productsByCategory = productos.filter(  TAREA VIEJA
     (product) => product.categoria.toLowerCase() === category.toLowerCase()
   );
   console.log(productsByCategory, "<-agarrados");
@@ -51,6 +50,10 @@ export const getProductsByCategory = async (req, res) => {
   try {
     const productsByCategory = await Product.find( { categoria: category} );
     console.log(productsByCategory,"<-- PBCat");
+
+    if (productsByCategory.length === 0 || !productsByCategory) {
+      return res.status(404).json( {message: "No se encontraron productos para la categoría especificada."} );
+    }
     res.status(200).json(productsByCategory);
   } catch (error) {
     return res.status(500).json( {message: error} );
@@ -64,18 +67,33 @@ export const sortProductsBryPrice = async (req, res) => {
   const { sort } = req.params;
   console.log(sort, "<--orden");
 
-  if (productos.length === 0)
-    return res.status(204).send("No existen productos para ordenar");
+  // if (productos.length === 0)
+  //   return res.status(204).send("No existen productos para ordenar");
 
-  if (sort === "asc") {
-    const asc = productos.sort((a, b) => a.precio - b.precio);
-    res.status(200).json(asc);
-  } else if (sort === "desc") {
-    const desc = productos.sort((a, b) => b.precio - a.precio);
-    res.status(200).json(desc);
-  } else {
-    res.status(404).json({ message: "No se puede ordenar de dicha manera." });
+  // if (sort === "asc") {
+  //   const asc = productos.sort((a, b) => a.precio - b.precio);
+  //   res.status(200).json(asc);
+  // } else if (sort === "desc") {
+  //   const desc = productos.sort((a, b) => b.precio - a.precio);
+  //   res.status(200).json(desc);
+  // } else {
+  //   res.status(404).json({ message: "No se puede ordenar de dicha manera." });
+  // }
+
+  try {
+    let sortedProducts;
+    if(sort === "asc"){ // Ordena productos por precio ascendente
+      sortedProducts = await Product.find().sort( {"precio": 1} );
+    }else if(sort == "desc"){
+      sortedProducts = await Product.find().sort( {"precio": -1} );
+    }else{
+      return res.status(400).json( {message: "Ordenamiento no válido. Use 'asc' o 'desc'."});
+    }
+    res.status(200).json(sortedProducts);
+  } catch (error) {
+    res.status(500).json( {message: "Error al ordenar productos por precio."} )
   }
+
 };
 
 //
