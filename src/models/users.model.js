@@ -12,6 +12,10 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    admin: { // CLASE 43
+        type: Boolean,
+        default: false
     }
 }, { versionKey: false });
 

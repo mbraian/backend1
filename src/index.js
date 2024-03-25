@@ -5,6 +5,8 @@ import morgan from "morgan";
 import cors from "cors";
 import "./db/db_connection.js";
 import usersRoutes from "./routes/users.routes.js";
+import privateRouter from "./routes/private.route.js"; // CLASE 43
+import comprobacionJwt from "./middlewares/comprobacionJwt.js"; // CLASE 43
 
 const app = express(); // Creamos una aplicacion de Express por la cual va a pasar todo el funcionamiento de nuestra app
 
@@ -15,6 +17,7 @@ app.use(cors()); // Permite peticiones de todos lados (si se declara asi como es
 app.use(ProductRoutes); // Debemos declarar las rutas depues de morgan
 app.use("/api", usersRoutes);
 // endpoint: "http://localhost:4000/api/usuarios"
+app.use("/api", comprobacionJwt,  privateRouter); // CLASE 43
 
 // LEVANTAMOS EL SERVIDOR
 app.listen(PORT, async () => {
