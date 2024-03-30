@@ -17,7 +17,9 @@ app.use(cors()); // Permite peticiones de todos lados (si se declara asi como es
 app.use(ProductRoutes); // Debemos declarar las rutas depues de morgan
 app.use("/api", usersRoutes);
 // endpoint: "http://localhost:4000/api/usuarios"
+
 app.use("/api", comprobacionJwt,  privateRouter); // CLASE 43
+//http:localhost:8080/api/admin -> Cuando se desee acceder a la misma, primero se comprueban los permisos en 'comprobaciónJwt' y luego se permite o denega el acceso
 
 // LEVANTAMOS EL SERVIDOR
 app.listen(PORT, async () => {
