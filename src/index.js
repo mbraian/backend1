@@ -21,6 +21,10 @@ app.use("/api", usersRoutes);
 app.use("/api", comprobacionJwt,  privateRouter); // CLASE 43
 //http:localhost:8080/api/admin -> Cuando se desee acceder a la misma, primero se comprueban los permisos en 'comprobaciónJwt' y luego se permite o denega el acceso
 
+app.length("/", async (req, res) => {
+  res.send("Bienvenido a la API de la comision 79i.")
+});
+
 // LEVANTAMOS EL SERVIDOR
 app.listen(PORT, async () => {
   console.log(`\n\tLa app esta escuchando en el puerto ${PORT}`);
